@@ -82,7 +82,6 @@ baseMessages.push({
  }
 }
 async function websearch({query}) {
-  console.log(query,"........")
   const response = await tvly.search(query);
   let res = response.results.map((item)=>{return item.content}).join("\n\n")
   return res;
