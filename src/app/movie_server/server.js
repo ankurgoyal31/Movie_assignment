@@ -60,3 +60,14 @@ return {info:summary,sucess:true}
   return{sucess:false}
 }
 }
+
+export const similer = async(id)=>{
+ try{
+let res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_KEY}&with_genres=${id}`) 
+ let data = await res.json()
+  console.log("all similer movie ->",data.results)
+  return {sucess:true,data:data.results}
+}catch(err){
+  return {sucess:false,data:[]}
+}
+}
