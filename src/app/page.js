@@ -28,12 +28,13 @@ export default function Page() {
     }
    }
    const ai_summry = async(id)=>{
+    console.log(id)
     router.push(`/movie_info?id=${id}`)
    }
    useEffect(() => {
-       get()
+        get()
   }, [])
-
+console.log(movies)
   const find = async() =>{
      try{
       console.log("call")
@@ -46,6 +47,7 @@ export default function Page() {
        set_movies([])
        set_show_back(true)
        setTimeout(() => {
+       set_err(false) 
        set_show_back(false)
        set_search_err(false)
        get()
@@ -60,6 +62,7 @@ export default function Page() {
 console.log("nothing....")
      }
   } 
+  let filter_movies = movies.filter(item => item.vote_average >=7.5||item.vote_average >=7||item.vote_average >=6).slice(0, 5);
    return (
     <div> 
        <div className="navbar"> 
@@ -71,6 +74,18 @@ console.log("nothing....")
       <span><button onClick={find} className="search-btn">search</button></span>
     </div>
     </div>
+
+<div className="hero_movie" style={{display:'flex'}}> {
+       filter_movies.length>0 && filter_movies.map((item)=>{
+        return <>
+        <div onClick={()=>ai_summry(item.id)} className="hero_box"> 
+             <img  className="hero_image" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}height="250" width="200"/>
+             <div class="overlay"></div>
+                     <div className="movie_title">{item.title}</div>
+        </div>
+        </>
+       }) 
+      }  </div>
      {loader && <><h3 style={{color:'white',justifySelf:'center'}}>loading....</h3></>}
     {err && <><h3 style={{color:'white',justifySelf:'center'}}>check your connection....</h3></>}
     {search_err && <><h3 style={{color:'white',justifySelf:'center'}}>invalid search....</h3></>}
