@@ -5,7 +5,16 @@ import { useState,useRef } from 'react'
 import { get_search_movie } from '../movie_server/server'
 import { summry } from '../movie_server/server'
 import { ai_movies_summary } from '../movie_server/server'
- const page = () => {
+import { Suspense } from 'react'
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div style={{ color: 'white', padding: 20 }}>Loading...</div>}>
+      <Summary_page />
+    </Suspense>
+  )
+}
+ const Summary_page = () => {
   const movie_summary = useRef("")
 const[ai_description,setdescription] = useState("")
 const[movie_info,set_movie_info] = useState([])
@@ -92,5 +101,3 @@ console.log(movie_info)
     </>
   )
 }
-
-export default page
