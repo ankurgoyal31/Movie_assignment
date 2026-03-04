@@ -35,6 +35,10 @@ export default function Page() {
         get()
   }, [])
   const find = async() =>{
+    if(search_movie===""){
+      alert("please enter movie name or id");
+      return;
+    }
      try{
      set_err(false)
      let data=await get_search_movie(search_movie);
@@ -67,7 +71,7 @@ export default function Page() {
       Welcome
     </h3>
     <div>
-      <input value={search_movie} onChange={(e)=>set_search_movie(e.target.value)} type="text" placeholder="enter movie name" />
+      <input value={search_movie} onChange={(e)=>set_search_movie(e.target.value)} type="text" placeholder="search by id or name" />
       <span><button onClick={find} className="search-btn">search</button></span>
     </div>
     </div>
