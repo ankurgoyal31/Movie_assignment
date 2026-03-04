@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useState,useRef } from 'react'
-import { get_search_movie } from '../movie_server/server'
 import { summry } from '../movie_server/server'
 import { ai_movies_summary } from '../movie_server/server'
 import { Suspense } from 'react'
@@ -16,9 +15,8 @@ export default function Page() {
   )
 }
  const Summary_page = () => {
-    const router = useRouter()
-  const movie_summary = useRef("")
-const[ai_description,setdescription] = useState("")
+  const router = useRouter()
+ const[ai_description,setdescription] = useState("")
 const[movie_info,set_movie_info] = useState([])
 const[loader,set_loader] = useState(true)
 const[all_similier_movies,set_all_similier_movies] = useState([])
@@ -31,7 +29,10 @@ async function get_info() {
   console.log("genres",data?.data.genres[0].id)
   set_movie_info([data.data])
   let summary = await ai_movies_summary(data?.data.title);
-  console.log(summary?.info)
+  console.log("info",summary?.info)
+  if(!summary.info){
+    console.log("not found")
+  }
   setdescription(summary?.info)
    let similier = await similer(data?.data.genres[0].id)
    console.log("similer",similier.data)
@@ -44,6 +45,8 @@ return "check connection"
   }
 }
 useEffect(() => {
+  set_loader(true)
+  setdescription("")
   get_info()
 }, [id])
   const ai_summry = async(id)=>{
@@ -92,7 +95,7 @@ console.log(movie_info)
    <div className="design_movie_similier_movies">
         {all_similier_movies.length>0 && all_similier_movies.map((movie) => (
           <div>
-            <img onClick={()=>ai_summry(movie.id)} className="image" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}height="250" width="200"/>
+            <img width={200} height={250} onClick={()=>ai_summry(movie.id)} className="image" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
             <p>{movie.release_date}</p>
           </div>
         ))}
