@@ -84,15 +84,18 @@ border-radius: 5px;
     padding: 0px;
   }
   .design_movie_similier_movies{
+    width: 100%;
     justify-content: center;
+    border: solid red 2px;
+
   }
 .backdrop{
   height: 125vh;
 }
 .content{
-  width:100%;
+  width: 100%;
   left: 0px;
-}
+ }
  }
  .navbar{
   display: flex;
