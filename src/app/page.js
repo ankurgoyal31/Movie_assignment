@@ -17,7 +17,6 @@ export default function Page() {
      try{
       let  arr = [1,2,3,4,5,6,7,8,9,10];
       let random = Math.floor(Math.random()*arr.length)+1
-      console.log(random)
      const get_all_movies = await getPopularMovies(random);
      if(get_all_movies.length>0){
       set_loader(false);
@@ -30,16 +29,13 @@ export default function Page() {
     }
    }
    const ai_summry = async(id)=>{
-    console.log(id)
     router.push(`/movie_info?id=${id}`)
    }
    useEffect(() => {
         get()
   }, [])
-console.log(movies)
   const find = async() =>{
      try{
-      console.log("call")
      set_err(false)
      let data=await get_search_movie(search_movie);
       if(!data.sucess && data.data.length===0){
@@ -55,13 +51,11 @@ console.log(movies)
        get()
        },2000);
      }else{
-      console.log("all movies")
-      console.log(data)
       set_movies(data.data)
       set_show_back(true)
      }
       }catch(err){
-console.log("nothing....")
+         return "something went wrong..."
      }
   } 
   let filter_movies = filter.filter(item => item.vote_average >=7.5||item.vote_average >=7||item.vote_average >=6).slice(0, 5);
