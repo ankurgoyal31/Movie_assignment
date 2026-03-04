@@ -71,7 +71,6 @@ try{
     return {info:check.summary,sucess:true}
   }
 let summary = await description(title)
-console.log("data movie -> ",summary)
 await collection.insertOne({title,summary})
 return {info:summary,sucess:true}
 }catch(err){
@@ -85,7 +84,6 @@ export const similer = async(id)=>{
  let data = await res.json()
   return {sucess:true,data:data.results}
 }catch(err){
-  console.log(err)
   return {sucess:false,data:[]}
 }
 }
