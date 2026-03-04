@@ -12,6 +12,7 @@ export default function Page() {
   const[err,set_err] = useState(false)
   const[show_back,set_show_back] = useState(false)
   const[search_err,set_search_err] = useState(false)
+  const[filter,set_filter] = useState([])
    async function get() {
      try{
       let  arr = [1,2,3,4,5,6,7,8,9,10];
@@ -22,6 +23,7 @@ export default function Page() {
       set_loader(false);
      }
      set_movies(get_all_movies)
+     set_filter(get_all_movies)
     }catch(err){
       set_err(true)
       set_loader(false)
@@ -62,7 +64,7 @@ console.log(movies)
 console.log("nothing....")
      }
   } 
-  let filter_movies = movies.filter(item => item.vote_average >=7.5||item.vote_average >=7||item.vote_average >=6).slice(0, 5);
+  let filter_movies = filter.filter(item => item.vote_average >=7.5||item.vote_average >=7||item.vote_average >=6).slice(0, 5);
    return (
     <div> 
        <div className="navbar"> 
