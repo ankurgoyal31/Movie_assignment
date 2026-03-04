@@ -22,20 +22,13 @@ const[loader,set_loader] = useState(true)
 const[all_similier_movies,set_all_similier_movies] = useState([])
 const searchParams = useSearchParams();
 const id = searchParams.get("id");
-console.log("this is id",id)
 async function get_info() {
   try{
   let data = await summry(id)
-  console.log("genres",data?.data.genres[0].id)
   set_movie_info([data.data])
   let summary = await ai_movies_summary(data?.data.title);
-  console.log("info",summary?.info)
-  if(!summary.info){
-    console.log("not found")
-  }
   setdescription(summary?.info)
    let similier = await similer(data?.data.genres[0].id)
-   console.log("similer",similier.data)
   set_all_similier_movies(similier.data)
   if(summary.sucess){
     set_loader(false)
@@ -50,14 +43,10 @@ useEffect(() => {
   get_info()
 }, [id])
   const ai_summry = async(id)=>{
-    console.log(id)
     router.push(`/movie_info?id=${id}`)
    }
    let genres = movie_info[0]?.genres?.map((item)=>"["+item.name +"]" + " ")
-  console.log(genres)
   let production = movie_info[0]?.production_countries?.map((item)=>" "+item.name +" ," + " ")
- console.log(movie_info[0]?.genres)
-console.log(movie_info)
   return (
     <> 
     <div className='main_info_div'>
