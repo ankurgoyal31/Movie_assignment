@@ -86,8 +86,6 @@ border-radius: 5px;
   .design_movie_similier_movies{
     width: 100%;
     justify-content: center;
-    border: solid red 2px;
-
   }
 .backdrop{
   height: 125vh;
