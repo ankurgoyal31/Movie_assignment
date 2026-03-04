@@ -1,5 +1,17 @@
 "use server"
+import { MongoClient } from "mongodb";
 import { description } from "./ai_summry";
+let  collection = null;
+
+async function connect() {
+  if(collection) return collection;
+ const client = new MongoClient("mongodb+srv://ankurgoyal1227_db_user:0fqu2Vnd81bkdyJV@emploee.ltat2dt.mongodb.net/emploee");
+  await client.connect()
+  let db = await client.db("ai_summry");
+  collection = await db.collection("summary")
+  return collection;
+}
+
 export const getPopularMovies  = async(page_number)=> {
    const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.TMDB_KEY}&page=${page_number}`);
   const data = await res.json();
@@ -53,8 +65,14 @@ return {sucess:true,data:data}
 
 export const ai_movies_summary = async(title)=>{
 try{
+  let collection = await connect();
+  let check = await collection.findOne({title});
+  if(check){
+    return {info:check.summary,sucess:true}
+  }
 let summary = await description(title)
 console.log("data movie -> ",summary)
+await collection.insertOne({title,summary})
 return {info:summary,sucess:true}
 }catch(err){
   return{sucess:false}
@@ -63,11 +81,11 @@ return {info:summary,sucess:true}
 
 export const similer = async(id)=>{
  try{
-let res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_KEY}&with_genres=${id}`) 
+ let res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_KEY}&with_genres=${id}`) 
  let data = await res.json()
-  console.log("all similer movie ->",data.results)
   return {sucess:true,data:data.results}
 }catch(err){
+  console.log(err)
   return {sucess:false,data:[]}
 }
 }
