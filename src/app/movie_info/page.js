@@ -6,15 +6,16 @@ import { get_search_movie } from '../movie_server/server'
 import { summry } from '../movie_server/server'
 import { ai_movies_summary } from '../movie_server/server'
 import { Suspense } from 'react'
-
+import { useRouter } from 'next/navigation'
 export default function Page() {
-  return (
+   return (
     <Suspense fallback={<div style={{ color: 'white', padding: 20 }}>Loading...</div>}>
       <Summary_page />
     </Suspense>
   )
 }
  const Summary_page = () => {
+    const router = useRouter()
   const movie_summary = useRef("")
 const[ai_description,setdescription] = useState("")
 const[movie_info,set_movie_info] = useState([])
@@ -42,16 +43,20 @@ return "check connection"
 }
 useEffect(() => {
   get_info()
-}, [])
-   let genres = movie_info[0]?.genres.map((item)=>"["+item.name +"]" + " ")
+}, [id])
+  const ai_summry = async(id)=>{
+    console.log(id)
+    router.push(`/movie_info?id=${id}`)
+   }
+   let genres = movie_info[0]?.genres?.map((item)=>"["+item.name +"]" + " ")
   console.log(genres)
-  let production = movie_info[0]?.production_countries.map((item)=>" "+item.name +" ," + " ")
+  let production = movie_info[0]?.production_countries?.map((item)=>" "+item.name +" ," + " ")
  console.log(movie_info[0]?.genres)
 console.log(movie_info)
   return (
     <> 
     <div className='main_info_div'>
-      {movie_info.map((item)=>{
+      {movie_info.length>0 && movie_info.map((item)=>{
         return (<> 
           <div className="hero">
             <div style={{zIndex:'10000',position:'relative'}} className="navbar"> 
@@ -85,7 +90,7 @@ console.log(movie_info)
    <div className="design_movie_similier_movies">
         { all_similier_movies.map((movie) => (
           <div>
-            <img className="image" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}height="250" width="200"/>
+            <img onClick={()=>ai_summry(movie.id)} className="image" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}height="250" width="200"/>
             <p>{movie.release_date}</p>
           </div>
         ))}
