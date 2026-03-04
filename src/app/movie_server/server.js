@@ -5,7 +5,7 @@ let  collection = null;
 
 async function connect() {
   if(collection) return collection;
- const client = new MongoClient("mongodb+srv://ankurgoyal1227_db_user:0fqu2Vnd81bkdyJV@emploee.ltat2dt.mongodb.net/emploee");
+ const client = new MongoClient(`${process.env.MONGO_URI}`);
   await client.connect()
   let db = await client.db("ai_summry");
   collection = await db.collection("summary")
