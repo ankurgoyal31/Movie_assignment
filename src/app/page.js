@@ -15,7 +15,7 @@ export default function Page() {
    async function get() {
      try{
       let  arr = [1,2,3,4,5,6,7,8,9,10];
-      let random = Math.floor(Math.random()*arr.length)
+      let random = Math.floor(Math.random()*arr.length)+1
       console.log(random)
      const get_all_movies = await getPopularMovies(random);
      if(get_all_movies.length>0){
