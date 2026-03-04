@@ -81,6 +81,7 @@ border-radius: 5px;
   .ai_summary{
     width: 100%;
     padding: 0px;
+    max-height: 450px;
   }
   .design_movie_similier_movies{
     width: 100%;
