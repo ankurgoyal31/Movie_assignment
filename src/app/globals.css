@@ -69,6 +69,8 @@ box-shadow: 0 20px 40px rgba(0,0,0,0.6);
  @media(max-width:768px){
   .design_movie{
     justify-content: center;
+    gap:2px;
+    font-size:15px;
     }
   .image{
 width: 100%;
