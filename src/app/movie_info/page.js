@@ -7,6 +7,7 @@ import { summry } from '../movie_server/server'
 import { ai_movies_summary } from '../movie_server/server'
 import { Suspense } from 'react'
 import { useRouter } from 'next/navigation'
+import { similer } from '../movie_server/server'
 export default function Page() {
    return (
     <Suspense fallback={<div style={{ color: 'white', padding: 20 }}>Loading...</div>}>
@@ -27,13 +28,14 @@ console.log("this is id",id)
 async function get_info() {
   try{
   let data = await summry(id)
-  console.log("genres",data?.data.title)
+  console.log("genres",data?.data.genres[0].id)
   set_movie_info([data.data])
   let summary = await ai_movies_summary(data?.data.title);
   console.log(summary?.info)
   setdescription(summary?.info)
-   let similier = await get_search_movie(data?.data.genres[0].name)
-  set_all_similier_movies(similier?.data)
+   let similier = await similer(data?.data.genres[0].id)
+   console.log("similer",similier.data)
+  set_all_similier_movies(similier.data)
   if(summary.sucess){
     set_loader(false)
   }
@@ -88,7 +90,7 @@ console.log(movie_info)
            <div className='line'></div>
   <h1 className="all-populer-movies" style={{color:'white'}}>All Similier Movies</h1>
    <div className="design_movie_similier_movies">
-        { all_similier_movies.map((movie) => (
+        {all_similier_movies.length>0 && all_similier_movies.map((movie) => (
           <div>
             <img onClick={()=>ai_summry(movie.id)} className="image" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}height="250" width="200"/>
             <p>{movie.release_date}</p>
