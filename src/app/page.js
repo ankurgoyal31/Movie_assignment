@@ -65,6 +65,7 @@ console.log("nothing....")
      }
   } 
   let filter_movies = filter.filter(item => item.vote_average >=7.5||item.vote_average >=7||item.vote_average >=6).slice(0, 5);
+    const filteredMovies = movies.filter(movie => movie.poster_path)
    return (
     <div> 
        <div className="navbar"> 
@@ -95,7 +96,7 @@ console.log("nothing....")
     {show_back && <span><a style={{color:'white',textDecoration:'none',marginTop:'10%'}} href="/">⬅ Back</a> </span>}
 
       <div style={{marginTop:'10px'}} className="design_movie">
-        { movies.map((movie) => (
+        {filteredMovies.length>0 && filteredMovies.map((movie) => (
           <div onClick={()=>ai_summry(movie.id)} className="each-movie" key={movie.id}>
             <img className="image" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}height="250" width="200"/>
             <p>{movie.release_date}</p>
