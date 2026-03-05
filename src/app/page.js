@@ -17,6 +17,7 @@ export default function Page() {
      try{
       let  arr = [1,2,3,4,5,6,7,8,9,10];
       let random = Math.floor(Math.random()*arr.length)+1
+      console.log(random)
      const get_all_movies = await getPopularMovies(random);
      if(get_all_movies.length>0){
       set_loader(false);
@@ -29,17 +30,16 @@ export default function Page() {
     }
    }
    const ai_summry = async(id)=>{
+    console.log(id)
     router.push(`/movie_info?id=${id}`)
    }
    useEffect(() => {
         get()
   }, [])
+console.log(movies)
   const find = async() =>{
-    if(search_movie===""){
-      alert("please enter movie name or id");
-      return;
-    }
      try{
+      console.log("call")
      set_err(false)
      let data=await get_search_movie(search_movie);
       if(!data.sucess && data.data.length===0){
@@ -55,15 +55,17 @@ export default function Page() {
        get()
        },2000);
      }else{
+      console.log("all movies")
+      console.log(data)
       set_movies(data.data)
       set_show_back(true)
      }
       }catch(err){
-         return "something went wrong..."
+console.log("nothing....")
      }
   } 
   let filter_movies = filter.filter(item => item.vote_average >=7.5||item.vote_average >=7||item.vote_average >=6).slice(0, 5);
-    const filteredMovies = movies.filter(movie => movie.poster_path)
+  const filteredMovies = movies.filter(movie => movie.poster_path)
    return (
     <div> 
        <div className="navbar"> 
@@ -71,11 +73,10 @@ export default function Page() {
       Welcome
     </h3>
     <div>
-      <input value={search_movie} onChange={(e)=>set_search_movie(e.target.value)} type="text" placeholder="search by id or name" />
+      <input value={search_movie} onChange={(e)=>set_search_movie(e.target.value)} type="text" placeholder="enter movie name" />
       <span><button onClick={find} className="search-btn">search</button></span>
     </div>
     </div>
-
 <div className="hero_movie" style={{display:'flex'}}> {
        filter_movies.length>0 && filter_movies.map((item)=>{
         return <>
@@ -92,14 +93,15 @@ export default function Page() {
     {search_err && <><h3 style={{color:'white',justifySelf:'center'}}>invalid search....</h3></>}
     {!show_back && <h1 className="all-populer-movies" style={{color:'white'}}>Popular Movies</h1>}
     {show_back && <span><a style={{color:'white',textDecoration:'none',marginTop:'10%'}} href="/">⬅ Back</a> </span>}
-
+      <div className="movie_center"> 
       <div style={{marginTop:'10px'}} className="design_movie">
-        {filteredMovies.length>0 && filteredMovies.map((movie) => (
+        { filteredMovies.map((movie) => (
           <div onClick={()=>ai_summry(movie.id)} className="each-movie" key={movie.id}>
             <img className="image" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}height="250" width="200"/>
             <p>{movie.release_date}</p>
           </div>
         ))}
+      </div>
       </div>
      </div>
   );
