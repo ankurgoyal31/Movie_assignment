@@ -3,7 +3,7 @@ body{
   padding: 0px;
   overflow-x: hidden;
   background-color: black;
-}
+ }
 .design_movie{
 display: flex;
 width: 100%;
@@ -73,8 +73,8 @@ box-shadow: 0 20px 40px rgba(0,0,0,0.6);
  }
 
 .hero_image{
-  width: 500px;
-  height: 700px;
+  width: 350px;
+  height: 500px;
   }
 .hero_box:hover{
   transform: translateX(8px);
@@ -94,6 +94,11 @@ box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   text-align: center;
   z-index: 2;
 }
+ .movie_center{
+      display: block;
+      justify-content: center;
+        padding-left: 4%;
+    }
  @media(max-width:768px){
   .design_movie{
     justify-content: center;
@@ -103,13 +108,13 @@ width: 100%;
 height: 120px;
 border-radius: 5px;
     }
-  .all-populer-movies{ 
+  .all-populer-movies{
     font-size: 25px;
   }
   .ai_summary{
     width: 100%;
     padding: 0px;
-    max-height:450px
+    max-height: 450px;
   }
   .design_movie_similier_movies{
     width: 100%;
@@ -119,13 +124,17 @@ border-radius: 5px;
   height: 125vh;
 }
 .movie_title{
-  font-size: 20px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.634);
 }
  .hero_image{
       width: 200px;
       height: 350px;
      }
+      .movie_center{
+      width: 100%;
+      padding-left: 0px;
+    }
  }
  .navbar{
   display: flex;
@@ -161,3 +170,4 @@ input{
       max-width: 100%;
       gap: 20px;
     }
+    
