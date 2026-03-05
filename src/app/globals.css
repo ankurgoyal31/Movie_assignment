@@ -73,8 +73,8 @@ box-shadow: 0 20px 40px rgba(0,0,0,0.6);
  }
 
 .hero_image{
-  width: 350px;
-  height: 500px;
+  width: 400px;
+  height: 520px;
   }
 .hero_box:hover{
   transform: translateX(8px);
