@@ -37,6 +37,7 @@ export default function Page() {
   const find = async() =>{
     if(search_movie===""){
       alert("please enter movie name or id");
+      return;
     }
      try{
      set_err(false)
